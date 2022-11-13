@@ -17,7 +17,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--model", required=True, help="Model file to load")
     parser.add_argument("-s", "--env", default=DEFAULT_ENV_NAME, help="Envirnment name to use, default=" + DEFAULT_ENV_NAME)
-    parser.add_argument("-n", "--episodes", default=10, help="Number of episodes to run")
     parser.add_argument("-r", "--record", help="Directory for video")
     parser.add_argument("--no-vis", default=True, dest="vis", help="Disable visualization", action="store_false")
     args = parser.parse_args()
@@ -34,12 +33,12 @@ if __name__ == "__main__":
     total_reward = 0.0
     c = collections.Counter()
 
-    for _ in range(args.episodes):
+    while True:
         start_ts = time.time()
         if args.vis:
-            env.render()
+            env.render("human")
 
-        state_v = torch.tensor(np.array([state]), copy=False)
+        state_v = torch.tensor(np.array([state], copy=False))
         q_vals = net(state_v).data.numpy()[0]
         action = np.argmax(q_vals)
         c[action] += 1
