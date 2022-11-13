@@ -133,6 +133,8 @@ if __name__ == "__main__":
     ts = time.time()
     best_m_reward = None
 
+    net.train()
+    tgt_net.train()
     while True:
         frame_idx += 1
         epsilon = max(EPSILON_START - frame_idx / EPSILON_DECAY_LAST_FRAME, EPSILON_FINAL)

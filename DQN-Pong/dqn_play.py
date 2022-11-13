@@ -33,12 +33,13 @@ if __name__ == "__main__":
     total_reward = 0.0
     c = collections.Counter()
 
+    net.eval()
     while True:
         start_ts = time.time()
         if args.vis:
-            env.render("human")
+            env.render()
 
-        state_v = torch.tensor(np.array([state], copy=False))
+        state_v = torch.tensor(np.array([state]), copy=False)
         q_vals = net(state_v).data.numpy()[0]
         action = np.argmax(q_vals)
         c[action] += 1
